@@ -1,6 +1,7 @@
 import { Button, TextInput } from "@mantine/core";
 import { memo, useContext, useState } from "react";
 import { TodoContext } from "../Context/TodoContext";
+import styles from "./styles.module.css";
 
 export const TodoInput = memo(() => {
   const [input, setInput] = useState("");
@@ -14,7 +15,7 @@ export const TodoInput = memo(() => {
 
   return (
     <form
-      style={{ display: "flex", gap: 7, width: "fit-content" }}
+      className={styles.container}
       onSubmit={(e) => {
         e.preventDefault();
         submitTodo();

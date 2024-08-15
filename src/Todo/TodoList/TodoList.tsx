@@ -3,25 +3,10 @@ import { TodoContext } from "../Context/TodoContext";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { Todo } from "../types/todoTypes";
 import { Button } from "@mantine/core";
+import styles from "./styles.module.css";
+import { getFilteredTodos } from "../utils/getFilteredTodos";
 
 type ListVisibleState = "all" | "active" | "completed";
-
-const getFilteredTodos = (todos: Todo[]) => {
-  const completed: Todo[] = [];
-  const active: Todo[] = [];
-  todos.forEach((t) => {
-    if (t.completed) {
-      completed.push(t);
-    } else {
-      active.push(t);
-    }
-  });
-
-  return {
-    completed,
-    active,
-  };
-};
 
 export const TodoList = () => {
   const { todos, clearCompleted, deleteTodo, setChecked } =
@@ -57,20 +42,14 @@ export const TodoList = () => {
   };
 
   return (
-    <div style={{ width: "100%", padding: "0 20px" }}>
+    <div className={styles.container}>
       {renderListFunc(state)}
       {todos.length ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div className={styles.additional}>
           <div>
             {!active.length ? "All done!" : `${active.length} items left`}
           </div>
-          <div style={{ display: "flex", gap: 4 }}>
+          <div className={styles.controls}>
             <Button
               color={state === "all" ? "green" : ""}
               size="compact-xs"
@@ -93,7 +72,7 @@ export const TodoList = () => {
               Completed
             </Button>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div className={styles.controls}>
             <Button onClick={clearCompleted} size="compact-xs">
               Clear completed
             </Button>
