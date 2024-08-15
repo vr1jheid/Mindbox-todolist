@@ -14,7 +14,7 @@ export const TodoInput = memo(() => {
 
   return (
     <form
-      style={{ display: "flex", gap: 7 }}
+      style={{ display: "flex", gap: 7, width: "fit-content" }}
       onSubmit={(e) => {
         e.preventDefault();
         submitTodo();

@@ -28,9 +28,20 @@ export const TodoContextContainer = ({ children }: { children: ReactNode }) => {
       return copy;
     });
   };
+
+  const clearCompleted = () => {
+    setTodos((prev) => prev.filter((t) => !t.completed));
+  };
   return (
     <TodoContext.Provider
-      value={{ todos, addTodo, deleteTodo, deleteAll, setChecked }}
+      value={{
+        todos,
+        addTodo,
+        deleteTodo,
+        deleteAll,
+        setChecked,
+        clearCompleted,
+      }}
     >
       {children}
     </TodoContext.Provider>

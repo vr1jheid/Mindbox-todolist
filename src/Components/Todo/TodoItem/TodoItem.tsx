@@ -1,20 +1,40 @@
-import { Checkbox } from "@mantine/core";
+import { Checkbox, CloseButton } from "@mantine/core";
 import { Todo } from "../types/todoTypes";
-import { useContext } from "react";
-import { TodoContext } from "../Context/TodoContext";
 
-export const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { id, text, completed } = todo;
-  const { setChecked } = useContext(TodoContext);
+interface Props {
+  todo: Todo;
+  setChecked: () => void;
+  deleteTodo: () => void;
+}
+
+export const TodoItem = ({ todo, setChecked, deleteTodo }: Props) => {
+  const { text, completed } = todo;
+
   return (
-    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-      <Checkbox
-        checked={completed}
-        onChange={(e) => {
-          setChecked(id, e.target.checked);
+    <div
+      style={{
+        display: "flex",
+        gap: 10,
+        alignItems: "center",
+        justifyContent: "space-between",
+        border: "1px solid #5c9ed7",
+        margin: "15px 0",
+        padding: 3,
+        borderRadius: 4,
+      }}
+    >
+      <Checkbox checked={completed} onChange={setChecked} />
+      <div
+        style={{
+          textAlign: "left",
+          flexGrow: 1,
+          padding: "0 10px",
+          textDecoration: completed ? "line-through" : "none",
         }}
-      />{" "}
-      {text}
+      >
+        {text}
+      </div>
+      <CloseButton onClick={deleteTodo} />
     </div>
   );
 };

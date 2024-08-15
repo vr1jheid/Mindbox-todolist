@@ -1,34 +1,105 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { TodoContext } from "../Context/TodoContext";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { Todo } from "../types/todoTypes";
+import { Button } from "@mantine/core";
 
-const filterFuncs = () => {
-  const getAll = (t: Todo) => t;
-  const getCompleted = (t: Todo) => t.completed;
-  const getActive = (t: Todo) => !t.completed;
+type ListVisibleState = "all" | "active" | "completed";
+
+const getFilteredTodos = (todos: Todo[]) => {
+  const completed: Todo[] = [];
+  const active: Todo[] = [];
+  todos.forEach((t) => {
+    if (t.completed) {
+      completed.push(t);
+    } else {
+      active.push(t);
+    }
+  });
+
   return {
-    getAll,
-    getCompleted,
-    getActive,
+    completed,
+    active,
   };
 };
 
 export const TodoList = () => {
-  const { todos } = useContext(TodoContext);
-  const [state, setState] = useState<"all" | "active" | "completed">("all");
+  const { todos, clearCompleted, deleteTodo, setChecked } =
+    useContext(TodoContext);
+  const [state, setState] = useState<ListVisibleState>("all");
+  const { completed, active } = useMemo(() => getFilteredTodos(todos), [todos]);
 
-  const { getAll, getCompleted, getActive } = filterFuncs();
+  const renderListFunc = (state: ListVisibleState) => {
+    const renderItemFunc = (t: Todo) => (
+      <li key={t.id}>
+        <TodoItem
+          todo={t}
+          deleteTodo={() => {
+            deleteTodo(t.id);
+          }}
+          setChecked={() => {
+            setChecked(t.id, !t.completed);
+          }}
+        />
+      </li>
+    );
 
-  const filteredTodos = todos.filter(getAll);
+    switch (state) {
+      case "all":
+        return <ul>{todos.map(renderItemFunc)}</ul>;
+      case "active":
+        return <ul>{active.map(renderItemFunc)}</ul>;
+      case "completed":
+        return <ul>{completed.map(renderItemFunc)}</ul>;
+      default:
+        return [];
+    }
+  };
 
   return (
-    <ul>
-      {todos.map((t) => (
-        <li>
-          <TodoItem todo={t} />
-        </li>
-      ))}
-    </ul>
+    <div style={{ width: "100%", padding: "0 20px" }}>
+      {renderListFunc(state)}
+      {todos.length ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            {!active.length ? "All done!" : `${active.length} items left`}
+          </div>
+          <div style={{ display: "flex", gap: 4 }}>
+            <Button
+              color={state === "all" ? "green" : ""}
+              size="compact-xs"
+              onClick={() => setState("all")}
+            >
+              All
+            </Button>
+            <Button
+              color={state === "active" ? "green" : ""}
+              size="compact-xs"
+              onClick={() => setState("active")}
+            >
+              Active
+            </Button>
+            <Button
+              color={state === "completed" ? "green" : ""}
+              size="compact-xs"
+              onClick={() => setState("completed")}
+            >
+              Completed
+            </Button>
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Button onClick={clearCompleted} size="compact-xs">
+              Clear completed
+            </Button>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 };

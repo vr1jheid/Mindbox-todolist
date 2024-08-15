@@ -7,6 +7,7 @@ interface TodoContext {
   deleteTodo: (id: string) => void;
   deleteAll: () => void;
   setChecked: (id: string, value: boolean) => void;
+  clearCompleted: () => void;
 }
 
 export const TodoContext = createContext<TodoContext>({
@@ -15,4 +16,5 @@ export const TodoContext = createContext<TodoContext>({
   deleteTodo: () => {},
   deleteAll: () => {},
   setChecked: () => {},
+  clearCompleted: () => {},
 });
