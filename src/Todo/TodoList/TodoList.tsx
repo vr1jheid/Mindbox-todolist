@@ -14,6 +14,10 @@ export const TodoList = () => {
   const [state, setState] = useState<ListVisibleState>("all");
   const { completed, active } = useMemo(() => getFilteredTodos(todos), [todos]);
 
+  if (!todos.length) {
+    return <div>List is empty</div>;
+  }
+
   const renderListFunc = (state: ListVisibleState) => {
     const renderItemFunc = (t: Todo) => (
       <li key={t.id}>
@@ -32,10 +36,19 @@ export const TodoList = () => {
     switch (state) {
       case "all":
         return <ul>{todos.map(renderItemFunc)}</ul>;
+
       case "active":
-        return <ul>{active.map(renderItemFunc)}</ul>;
+        return active.length ? (
+          <ul>{active.map(renderItemFunc)}</ul>
+        ) : (
+          <span>No more active todos</span>
+        );
       case "completed":
-        return <ul>{completed.map(renderItemFunc)}</ul>;
+        return completed.length ? (
+          <ul>{completed.map(renderItemFunc)}</ul>
+        ) : (
+          <span>There are no completed todos yet</span>
+        );
       default:
         return [];
     }

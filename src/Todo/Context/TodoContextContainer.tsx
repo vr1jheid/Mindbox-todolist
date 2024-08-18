@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const TodoContextContainer = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+
   const addTodo = (text: string) => {
     const todo: Todo = {
       id: uuidv4(),
@@ -14,12 +15,15 @@ export const TodoContextContainer = ({ children }: { children: ReactNode }) => {
 
     setTodos((prev) => [todo, ...prev]);
   };
+
   const deleteTodo = (id: string) => {
     setTodos((prev) => prev.filter((t) => t.id !== id));
   };
+
   const deleteAll = () => {
     setTodos([]);
   };
+
   const setChecked = (id: string, value: boolean) => {
     setTodos((prev) => {
       const copy = [...prev];

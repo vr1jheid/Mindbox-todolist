@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { Todo } from "../types/todoTypes";
 
-interface TodoContext {
+export interface TodoContext {
   todos: Todo[];
   addTodo: (text: string) => void;
   deleteTodo: (id: string) => void;
