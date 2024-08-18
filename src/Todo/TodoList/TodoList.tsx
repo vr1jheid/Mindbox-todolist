@@ -1,10 +1,11 @@
+import { Button } from "@mantine/core";
 import { useContext, useMemo, useState } from "react";
+
 import { TodoContext } from "../Context/TodoContext";
 import { TodoItem } from "../TodoItem/TodoItem";
 import { Todo } from "../types/todoTypes";
-import { Button } from "@mantine/core";
-import styles from "./styles.module.css";
 import { getFilteredTodos } from "../utils/getFilteredTodos";
+import styles from "./styles.module.css";
 
 type ListVisibleState = "all" | "active" | "completed";
 

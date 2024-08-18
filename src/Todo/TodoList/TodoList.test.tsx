@@ -1,9 +1,10 @@
-import { render, screen } from "@testing-library/react";
-import { TodoContext } from "../Context/TodoContext";
-import { TodoList } from "./TodoList";
 import { MantineProvider } from "@mantine/core";
-import { Todo } from "../types/todoTypes";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+import { TodoContext } from "../Context/TodoContext";
+import { Todo } from "../types/todoTypes";
+import { TodoList } from "./TodoList";
 
 describe("TodoList", () => {
   const todos: Todo[] = [

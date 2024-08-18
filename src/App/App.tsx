@@ -1,6 +1,7 @@
 import { Container } from "@mantine/core";
-import { TodoInput } from "../Todo/TodoInput/TodoInput";
+
 import { TodoContextContainer } from "../Todo/Context/TodoContextContainer";
+import { TodoInput } from "../Todo/TodoInput/TodoInput";
 import { TodoList } from "../Todo/TodoList/TodoList";
 import styles from "./styles.module.css";
 

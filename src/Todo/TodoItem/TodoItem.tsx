@@ -1,4 +1,5 @@
 import { Checkbox, CloseButton } from "@mantine/core";
+
 import { Todo } from "../types/todoTypes";
 import styles from "./styles.module.css";
 

@@ -1,10 +1,25 @@
-import { ReactNode, useState } from "react";
-import { TodoContext } from "./TodoContext";
-import { Todo } from "../types/todoTypes";
+import { ReactNode, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import { Todo } from "../types/todoTypes";
+import { TodoContext } from "./TodoContext";
 
 export const TodoContextContainer = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [isInit, setisInit] = useState(false);
+
+  useEffect(() => {
+    const todosStr = localStorage.getItem("todos");
+    if (!todosStr) return;
+    const todos = JSON.parse(todosStr) as Todo[];
+    setTodos(todos);
+    setisInit(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isInit) return;
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [isInit, todos]);
 
   const addTodo = (text: string) => {
     const todo: Todo = {

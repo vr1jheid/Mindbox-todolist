@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import { TodoItem } from "../TodoItem";
 import { MantineProvider } from "@mantine/core";
+import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+
+import { TodoItem } from "../TodoItem";
 
 describe("Todo item", () => {
   const deleteFunc = vi.fn();

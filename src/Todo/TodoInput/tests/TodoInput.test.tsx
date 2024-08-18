@@ -1,8 +1,9 @@
+import { MantineProvider } from "@mantine/core";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { TodoInput } from "../TodoInput";
-import { MantineProvider } from "@mantine/core";
+
 import { TodoContext } from "../../Context/TodoContext";
+import { TodoInput } from "../TodoInput";
 
 /* const TodoContext = createContext({ addTodo: vi.fn() }); */
 describe("todo input", () => {
